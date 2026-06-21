@@ -1,0 +1,174 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Documo
+providerId: documo
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Fax
+- Cloud Fax
+- Document Delivery
+- HIPAA
+- Communications
+- Plans
+description: >-
+  Documo sells cloud fax via tiered monthly subscription plans that bundle a
+  monthly page allotment, then charge per-page overage above the allotment.
+  Plans run from Solo through Enterprise, with additional users and numbers
+  billed as flat monthly add-ons. AI document processing (IDP) is billed
+  separately per document rather than per page. All plans are HIPAA compliant.
+  A 14-day free trial is available. API access is available on plans that
+  enable the API; exact per-plan API entitlements are not reconciled here.
+notes: >-
+  Plan prices and page allotments below are drawn from public pricing summaries
+  and may differ from the current Documo pricing page; verify exact tiers,
+  annual discounts, and API entitlements at documo.com/pricing during
+  reconciliation. Marked reconciled false.
+sources:
+- https://www.documo.com/pricing/
+- https://docs.documo.com/
+plans:
+- id: documo-solo
+  name: Solo
+  type: subscription
+  description: >-
+    Entry cloud fax plan with a small monthly page allotment for individual
+    users.
+  entries:
+  - label: Solo Monthly
+    name: solo
+    type: flat
+    metric: pages
+    limit: 300
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $25 per month (300 pages included)
+    userMultiplied: false
+  elements:
+  - name: Send Fax
+  - name: Receive Fax
+  - name: HIPAA Compliance
+- id: documo-professional
+  name: Professional
+  type: subscription
+  description: >-
+    Mid-tier cloud fax plan with a larger page allotment for small teams.
+  entries:
+  - label: Professional Monthly
+    name: professional
+    type: flat
+    metric: pages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $75 per month (page allotment per pricing page)
+    userMultiplied: false
+  elements:
+  - name: Send Fax
+  - name: Receive Fax
+  - name: API Access
+  - name: Webhooks
+- id: documo-business
+  name: Business
+  type: subscription
+  description: >-
+    Higher-volume cloud fax plan for teams; lower effective rate with annual
+    billing.
+  entries:
+  - label: Business Monthly
+    name: business
+    type: flat
+    metric: pages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $150 per month ($125 per month billed annually)
+    userMultiplied: false
+  elements:
+  - name: Send Fax
+  - name: Receive Fax
+  - name: API Access
+  - name: Webhooks
+- id: documo-enterprise
+  name: Enterprise
+  type: enterprise
+  description: >-
+    Highest published tier with a large page allotment; volume and custom
+    terms via Documo sales.
+  entries:
+  - label: Enterprise Monthly
+    name: enterprise
+    type: flat
+    metric: pages
+    limit: 6000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $300 per month (6,000 pages included); custom terms available
+    userMultiplied: false
+  elements:
+  - name: Send Fax
+  - name: Receive Fax
+  - name: API Access
+  - name: Webhooks
+  - name: Custom Volume Pricing
+- id: documo-addons
+  name: Add-ons and Overage
+  type: usage
+  description: >-
+    Per-page overage above the plan allotment plus flat monthly add-ons for
+    extra users and numbers, and per-document AI document processing.
+  entries:
+  - label: Page Overage
+    name: page_overage
+    type: usage
+    metric: pages
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0.15 per additional page
+    userMultiplied: false
+  - label: Additional User
+    name: additional_user
+    type: flat
+    metric: users
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $3 per user per month
+    userMultiplied: true
+  - label: Additional Number
+    name: additional_number
+    type: flat
+    metric: numbers
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $3 per number per month
+    userMultiplied: false
+  - label: Intelligent Document Processing (IDP)
+    name: idp
+    type: usage
+    metric: documents
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: billed separately per document (see pricing page)
+    userMultiplied: false
+  elements:
+  - name: Page Overage
+  - name: Additional Users
+  - name: Additional Numbers
+  - name: Intelligent Document Processing
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

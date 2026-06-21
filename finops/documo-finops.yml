@@ -1,0 +1,101 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Documo
+providerId: documo
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Fax
+- Cloud Fax
+- Document Delivery
+- Communications
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Documo (mFax) spend. Documo bills a recurring monthly
+  subscription per plan that bundles a page allotment, then charges per-page
+  overage above the allotment. Additional users and numbers are flat monthly
+  add-ons, and Intelligent Document Processing (IDP) is billed separately per
+  document. Cost optimization centers on matching plan tier to monthly page
+  volume and minimizing overage.
+notes: >-
+  Per-plan page allotments, overage rates, and IDP per-document pricing are
+  subject to change; verify against the Documo pricing page during
+  reconciliation. Marked reconciled false.
+sources:
+- https://www.documo.com/pricing/
+- https://docs.documo.com/
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Documo
+serviceCategory: Communications and Document Delivery
+billingModel:
+  pricingCategory: Subscription
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Documo Cloud Fax
+  ServiceCategory: Communications and Document Delivery
+  ProviderName: Documo
+  PublisherName: Documo
+  InvoiceIssuerName: Documo
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription
+meters:
+- name: plan_subscription
+  description: Recurring monthly plan fee that bundles a page allotment.
+  unit: months
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: page_overage
+  description: Pages sent or received above the plan allotment, billed per page.
+  unit: pages
+  aggregation: sum
+  dimensions:
+  - account
+  - number
+- name: additional_users
+  description: Extra user seats beyond those included in the plan, billed per user per month.
+  unit: users
+  aggregation: sum
+  dimensions:
+  - account
+- name: additional_numbers
+  description: Extra inbound fax numbers beyond those included, billed per number per month.
+  unit: numbers
+  aggregation: sum
+  dimensions:
+  - account
+- name: idp_documents
+  description: Documents processed via Intelligent Document Processing, billed per document.
+  unit: documents
+  aggregation: sum
+  dimensions:
+  - account
+principles:
+- name: Visibility
+  description: Pull Documo fax history and reports; track monthly page volume per number against the plan allotment.
+- name: Allocation
+  description: Tag numbers and API keys per client or workload; in multi-tenant setups use separate Documo accounts per client for accurate reporting.
+- name: Optimization
+  description: Right-size the plan tier to typical monthly page volume to avoid $0.15 per-page overage; remove unused users and numbers; reserve IDP for documents that need extraction.
+- name: Accountability
+  description: Assign an owner per account/plan; review page burn and overage monthly against budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

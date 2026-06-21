@@ -1,0 +1,206 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Documo API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fax",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a fax",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.documo.com/v1/fax/send",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Sends a fax to one or more recipients with optional cover page, scheduling, tags, and custom fields."
+        },
+        {
+          "info": {
+            "name": "Get a fax",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/fax/{messageId}"
+          },
+          "docs": "Retrieves the detail and current status of a single fax by its message id."
+        },
+        {
+          "info": {
+            "name": "Resend a fax",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.documo.com/v1/fax/{messageId}/resend",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"recipientFax\": \"12345678900\"\n}"
+            }
+          },
+          "docs": "Resends a previously failed fax by message id; optionally change the destination via recipientFax."
+        },
+        {
+          "info": {
+            "name": "Download a fax",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/fax/{messageId}/download?format=pdf"
+          },
+          "docs": "Downloads the document for a delivered or received fax. Use format to select pdf or tiff."
+        },
+        {
+          "info": {
+            "name": "List faxes (fax history)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/faxes?limit=50&offset=0"
+          },
+          "docs": "Returns a paginated list of inbound and outbound faxes. Rate limited to 8 calls per minute."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Numbers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search available numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/numbers/search?areaCode=202&country=US"
+          },
+          "docs": "Searches for available inbound fax numbers that can be provisioned."
+        },
+        {
+          "info": {
+            "name": "List provisioned numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/numbers?limit=50&offset=0"
+          },
+          "docs": "Lists the inbound fax numbers provisioned on the account."
+        },
+        {
+          "info": {
+            "name": "Provision a number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.documo.com/v1/numbers",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"faxNumber\": \"+12025550143\",\n  \"label\": \"Front Desk\"\n}"
+            }
+          },
+          "docs": "Provisions (adds) an available inbound fax number to the account."
+        },
+        {
+          "info": {
+            "name": "Release a number",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.documo.com/v1/numbers/{numberId}"
+          },
+          "docs": "Releases (removes) a provisioned inbound fax number from the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/webhooks"
+          },
+          "docs": "Lists webhook subscriptions configured on the account."
+        },
+        {
+          "info": {
+            "name": "Create a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.documo.com/v1/webhooks",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"url\": \"https://example.com/webhooks/documo\",\n  \"events\": [\"fax.v1.inbound.succeed\", \"fax.v1.outbound.succeed\", \"fax.v1.outbound.failed\"]\n}"
+            }
+          },
+          "docs": "Creates a webhook subscription at the account or number level for fax and number events."
+        },
+        {
+          "info": {
+            "name": "Delete a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.documo.com/v1/webhooks/{webhookId}"
+          },
+          "docs": "Deletes a webhook subscription by id."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/account"
+          },
+          "docs": "Retrieves the authenticated account's profile and settings."
+        }
+      ]
+    }
+  ]
+}

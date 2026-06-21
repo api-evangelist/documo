@@ -1,0 +1,61 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Documo
+providerId: documo
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Fax
+- Cloud Fax
+- Document Delivery
+- Communications
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Documo applies per-endpoint rate limits on its REST API. The fax history and
+  reports endpoints are documented as limited to 8 calls per minute; exceeding
+  the limit returns an HTTP 429 response, and no further requests are served
+  until the one-minute window resets. Limits on other endpoints (send, numbers,
+  webhooks, account) are not fully documented and are not reconciled here.
+notes: >-
+  Only the fax history / reports limit (8 calls per minute) is publicly
+  documented. Confirm limits for send-fax, numbers, webhooks, and account
+  endpoints, plus any account-level or per-plan throughput caps, against
+  Documo documentation during reconciliation. Marked reconciled false.
+sources:
+- https://docs.documo.com/
+- https://help.documo.com/hc/en-us/articles/24026506498715-Best-Practice-API-Integrations
+responseCodes:
+  throttled: 429
+limits:
+- name: Fax History / Reports
+  scope: account
+  metric: requests
+  limit: 8 per minute
+  notes: GET fax history and reports endpoints; returns 429 when exceeded until the one-minute window resets.
+- name: Send Fax
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Specific send-fax rate limit not publicly documented.
+- name: Numbers
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Number search, provision, list, and release; limit not publicly documented.
+- name: Webhooks
+  scope: account
+  metric: requests
+  limit: see provider documentation
+  notes: Webhook create, list, and delete; limit not publicly documented.
+policies:
+- name: Per-Endpoint Limits
+  description: Rate limits are applied per endpoint; the documented fax history limit is 8 calls per minute.
+- name: Backoff Strategy
+  description: Clients should pause on 429 responses and retry after the one-minute window resets, using exponential backoff with jitter.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,84 @@
+aid: documo
+name: Documo
+review:
+  question: Does Documo expose a documented public WebSocket or streaming API?
+  answer: false
+  date: '2026-06-21'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was created. Documo's event delivery is via
+    outbound HTTP webhooks (the platform POSTs JSON event payloads to a
+    subscriber URL), not via WebSocket, SSE, or any client-consumed
+    streaming transport. Webhook callbacks are an inbound integration on the
+    customer's side and are not modeled as an AsyncAPI streaming channel here.
+findings:
+  summary: |
+    Documo (mFax) exposes a documented public REST API at
+    https://api.documo.com/v1 secured with an API key sent in the
+    Authorization header. The API covers sending faxes, resending failed
+    faxes, retrieving fax detail and status, listing fax history, downloading
+    fax documents, searching/provisioning/listing/releasing numbers, and
+    creating/listing/deleting webhooks. Asynchronous delivery notifications
+    are delivered via outbound HTTP webhooks (event payloads POSTed to a
+    subscriber URL). No WebSocket (ws:// or wss://) or Server-Sent Events
+    (SSE) streaming surface is documented.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.documo.com/v1
+      documented: true
+    - protocol: Webhook
+      scheme: https
+      note: Documo POSTs JSON event payloads to a subscriber-provided HTTPS URL for fax and number events. Outbound HTTP callbacks, not a client-consumed stream.
+      documented: true
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events endpoint is documented.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Documo's API reference or help center as of the review date.
+  endpointsConfirmedRest:
+    - POST   https://api.documo.com/v1/fax/send
+    - GET    https://api.documo.com/v1/fax/{messageId}
+    - POST   https://api.documo.com/v1/fax/{messageId}/resend
+    - GET    https://api.documo.com/v1/fax/{messageId}/download
+    - GET    https://api.documo.com/v1/faxes
+    - GET    https://api.documo.com/v1/numbers
+    - POST   https://api.documo.com/v1/numbers
+    - GET    https://api.documo.com/v1/numbers/search
+    - DELETE https://api.documo.com/v1/numbers/{numberId}
+    - GET    https://api.documo.com/v1/webhooks
+    - POST   https://api.documo.com/v1/webhooks
+    - DELETE https://api.documo.com/v1/webhooks/{webhookId}
+    - GET    https://api.documo.com/v1/account
+  webhookEvents:
+    - fax.v1.inbound.succeed
+    - fax.v1.inbound.failed
+    - fax.v1.outbound.succeed
+    - fax.v1.outbound.failed
+    - fax.v1.number.add
+    - fax.v1.number.release
+sources:
+  - url: https://docs.documo.com/
+    type: Documentation
+    note: API reference; REST base URL https://api.documo.com, JSON responses, API key auth. Send/resend/download/history endpoints documented.
+  - url: https://docs.documo.com/#create-webhook
+    type: APIReference
+    note: Webhook creation and event types; webhooks set at account or number level. No WebSocket or SSE mentioned.
+  - url: https://www.documo.com/fax-api/
+    type: Documentation
+    note: Fax API landing page; documents POST /v1/fax/send with Authorization header and inbound fax delivery to applications.
+  - url: https://help.documo.com/hc/en-us/articles/24026506498715-Best-Practice-API-Integrations
+    type: Documentation
+    note: API access levels (admin/user) and fax history / reports rate limit of 8 calls per minute with 429 on breach.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or SSE streaming surface exists. Documo's only asynchronous
+    mechanism is outbound HTTP webhooks, which are modeled as a Webhooks
+    sub-API in apis.yml and described in the OpenAPI components (WebhookEvent
+    schema and event enum) rather than as an AsyncAPI streaming document.
