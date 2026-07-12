@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/documo-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: apiKey
+  type: http
+  scheme: bearer
+  description: 'API key generated in the Documo web app under Settings > API. The key is sent
+    in the Authorization header. Documo documents this as `Authorization: Basic <API_KEY>`,
+    where the API key itself acts as the bearer credential. Each key carries an admin or user
+    access level that determines which endpoints it may call.'
+  sources:
+  - openapi/documo-openapi.yml

@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://www.documo.com/our-solution/
+url: https://www.documo.com/our-solution/
+certifications:
+- SOC 2
+- HIPAA
+evidence:
+- source: https://www.documo.com/our-solution/
+  keywords:
+  - soc 2
+  - hipaa

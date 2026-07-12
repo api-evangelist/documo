@@ -93,6 +93,12 @@ apis:
   description: Retrieve account profile and settings information. API keys carry an
     admin or user access level that governs which endpoints they can call.
 common:
+- type: TrustCenter
+  url: security/documo-trust-center.yml
+- type: DomainSecurity
+  url: security/documo-domain-security.yml
+- type: Authentication
+  url: authentication/documo-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/documo
 - type: Website
@@ -105,6 +111,8 @@ common:
   url: rate-limits/documo-rate-limits.yml
 - type: FinOps
   url: finops/documo-finops.yml
+- url: https://www.documo.com/blog/feed/
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
