@@ -93,6 +93,8 @@ apis:
   description: Retrieve account profile and settings information. API keys carry an
     admin or user access level that governs which endpoints they can call.
 common:
+- type: AgenticAccess
+  url: agentic-access/documo-agentic-access.yml
 - type: TrustCenter
   url: security/documo-trust-center.yml
 - type: DomainSecurity
