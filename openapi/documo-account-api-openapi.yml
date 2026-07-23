@@ -1,0 +1,80 @@
+openapi: 3.0.1
+info:
+  title: Documo Account API
+  description: REST API for the Documo (mFax) cloud fax and document delivery platform. The API is organized around REST, accepts form-encoded and JSON request bodies, returns JSON-encoded responses, and is secured with an API key passed in the Authorization header. Send and receive faxes, manage fax numbers, subscribe to delivery events via webhooks, and read account information.
+  termsOfService: https://www.documo.com/terms-of-service
+  contact:
+    name: Documo Support
+    url: https://help.documo.com/
+  version: '1.0'
+servers:
+- url: https://api.documo.com/v1
+  description: Documo production API
+security:
+- apiKey: []
+tags:
+- name: Account
+  description: Read account profile and settings.
+paths:
+  /account:
+    get:
+      operationId: getAccount
+      tags:
+      - Account
+      summary: Get account
+      description: Retrieves the authenticated account's profile and settings.
+      responses:
+        '200':
+          description: Account detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          description: Human-readable error message.
+        code:
+          type: string
+          description: Machine-readable error code.
+    Account:
+      type: object
+      properties:
+        accountId:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        accessLevel:
+          type: string
+          enum:
+          - admin
+          - user
+        plan:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: bearer
+      description: 'API key generated in the Documo web app under Settings > API. The key is sent in the Authorization header. Documo documents this as `Authorization: Basic <API_KEY>`, where the API key itself acts as the bearer credential. Each key carries an admin or user access level that determines which endpoints it may call.'

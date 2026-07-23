@@ -1,0 +1,215 @@
+openapi: 3.0.1
+info:
+  title: Documo Account Numbers API
+  description: REST API for the Documo (mFax) cloud fax and document delivery platform. The API is organized around REST, accepts form-encoded and JSON request bodies, returns JSON-encoded responses, and is secured with an API key passed in the Authorization header. Send and receive faxes, manage fax numbers, subscribe to delivery events via webhooks, and read account information.
+  termsOfService: https://www.documo.com/terms-of-service
+  contact:
+    name: Documo Support
+    url: https://help.documo.com/
+  version: '1.0'
+servers:
+- url: https://api.documo.com/v1
+  description: Documo production API
+security:
+- apiKey: []
+tags:
+- name: Numbers
+  description: Search, provision, list, and release inbound fax numbers.
+paths:
+  /numbers:
+    get:
+      operationId: listNumbers
+      tags:
+      - Numbers
+      summary: List provisioned numbers
+      description: Lists the inbound fax numbers provisioned on the account.
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 50
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: A list of provisioned numbers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NumberList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: provisionNumber
+      tags:
+      - Numbers
+      summary: Provision a number
+      description: Provisions (adds) an available inbound fax number to the account.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProvisionNumberRequest'
+      responses:
+        '200':
+          description: The provisioned number.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaxNumber'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /numbers/search:
+    get:
+      operationId: searchNumbers
+      tags:
+      - Numbers
+      summary: Search available numbers
+      description: Searches for available inbound fax numbers that can be provisioned, optionally filtered by area code, region, or country.
+      parameters:
+      - name: areaCode
+        in: query
+        description: Area code to search within.
+        required: false
+        schema:
+          type: string
+      - name: region
+        in: query
+        description: State or region code.
+        required: false
+        schema:
+          type: string
+      - name: country
+        in: query
+        description: ISO country code.
+        required: false
+        schema:
+          type: string
+          default: US
+      responses:
+        '200':
+          description: Available numbers matching the search.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NumberList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /numbers/{numberId}:
+    delete:
+      operationId: releaseNumber
+      tags:
+      - Numbers
+      summary: Release a number
+      description: Releases (removes) a provisioned inbound fax number from the account.
+      parameters:
+      - name: numberId
+        in: path
+        required: true
+        description: Identifier of the provisioned number.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Number released.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    BadRequest:
+      description: The request was malformed or missing required parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    FaxNumber:
+      type: object
+      properties:
+        numberId:
+          type: string
+        faxNumber:
+          type: string
+        label:
+          type: string
+        region:
+          type: string
+        country:
+          type: string
+        status:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+    NumberList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaxNumber'
+        total:
+          type: integer
+    ProvisionNumberRequest:
+      type: object
+      required:
+      - faxNumber
+      properties:
+        faxNumber:
+          type: string
+          description: The available number to provision, in E.164 format.
+          example: '+12025550143'
+        label:
+          type: string
+          description: Friendly label for the number.
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          description: Human-readable error message.
+        code:
+          type: string
+          description: Machine-readable error code.
+    DeleteResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        id:
+          type: string
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: bearer
+      description: 'API key generated in the Documo web app under Settings > API. The key is sent in the Authorization header. Documo documents this as `Authorization: Basic <API_KEY>`, where the API key itself acts as the bearer credential. Each key carries an admin or user access level that determines which endpoints it may call.'

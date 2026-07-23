@@ -1,0 +1,362 @@
+openapi: 3.0.1
+info:
+  title: Documo Account Fax API
+  description: REST API for the Documo (mFax) cloud fax and document delivery platform. The API is organized around REST, accepts form-encoded and JSON request bodies, returns JSON-encoded responses, and is secured with an API key passed in the Authorization header. Send and receive faxes, manage fax numbers, subscribe to delivery events via webhooks, and read account information.
+  termsOfService: https://www.documo.com/terms-of-service
+  contact:
+    name: Documo Support
+    url: https://help.documo.com/
+  version: '1.0'
+servers:
+- url: https://api.documo.com/v1
+  description: Documo production API
+security:
+- apiKey: []
+tags:
+- name: Fax
+  description: Send, resend, retrieve, list, and download faxes.
+paths:
+  /fax/send:
+    post:
+      operationId: sendFax
+      tags:
+      - Fax
+      summary: Send a fax
+      description: Sends a fax to one or more recipients. Documents may be supplied as file attachments (multipart/form-data) or as document URLs. Supports an optional cover page, scheduled send time, tags, and custom fields. The send endpoint exposes the same options available in the web portal.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendFaxRequest'
+      responses:
+        '200':
+          description: Fax accepted for delivery.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fax'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /fax/{messageId}:
+    get:
+      operationId: getFax
+      tags:
+      - Fax
+      summary: Get a fax
+      description: Retrieves the detail and current status of a single fax by its message id.
+      parameters:
+      - $ref: '#/components/parameters/MessageId'
+      responses:
+        '200':
+          description: Fax detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fax'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /fax/{messageId}/resend:
+    post:
+      operationId: resendFax
+      tags:
+      - Fax
+      summary: Resend a fax
+      description: Resends a fax that previously failed by submitting the message id of the original fax. An optional recipientFax may be supplied to change the destination number.
+      parameters:
+      - $ref: '#/components/parameters/MessageId'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResendFaxRequest'
+      responses:
+        '200':
+          description: Fax accepted for re-delivery.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Fax'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /fax/{messageId}/download:
+    get:
+      operationId: downloadFax
+      tags:
+      - Fax
+      summary: Download a fax
+      description: Downloads the document for a delivered or received fax by message id. The format query parameter selects the returned file type.
+      parameters:
+      - $ref: '#/components/parameters/MessageId'
+      - name: format
+        in: query
+        description: File format to return.
+        required: false
+        schema:
+          type: string
+          enum:
+          - pdf
+          - tiff
+          default: pdf
+      responses:
+        '200':
+          description: Fax document.
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            image/tiff:
+              schema:
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /faxes:
+    get:
+      operationId: listFaxes
+      tags:
+      - Fax
+      summary: List faxes (fax history)
+      description: Returns a paginated list of faxes (inbound and outbound) in the account. This fax history endpoint is rate limited; exceeding the limit returns HTTP 429.
+      parameters:
+      - name: direction
+        in: query
+        description: Filter by fax direction.
+        required: false
+        schema:
+          type: string
+          enum:
+          - inbound
+          - outbound
+      - name: status
+        in: query
+        description: Filter by fax status.
+        required: false
+        schema:
+          type: string
+      - name: dateFrom
+        in: query
+        description: Inclusive lower bound for the fax date (ISO 8601).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: dateTo
+        in: query
+        description: Inclusive upper bound for the fax date (ISO 8601).
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: limit
+        in: query
+        description: Maximum number of records to return.
+        required: false
+        schema:
+          type: integer
+          default: 50
+      - name: offset
+        in: query
+        description: Number of records to skip for pagination.
+        required: false
+        schema:
+          type: integer
+          default: 0
+      responses:
+        '200':
+          description: A list of faxes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FaxList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  schemas:
+    Fax:
+      type: object
+      properties:
+        messageId:
+          type: string
+          description: Unique identifier of the fax message.
+        deliveryId:
+          type: string
+          description: Identifier of the delivery attempt.
+        status:
+          type: string
+          description: Current status of the fax (e.g. queued, sending, success, failed).
+          example: success
+        direction:
+          type: string
+          enum:
+          - inbound
+          - outbound
+        recipientFax:
+          type: string
+        recipientName:
+          type: string
+        faxNumber:
+          type: string
+          description: Account number the fax was sent from or received on.
+        faxCsid:
+          type: string
+          description: Called subscriber identification reported by the remote device.
+        faxCallerId:
+          type: string
+        pagesCount:
+          type: integer
+          description: Total number of pages in the fax.
+        pagesComplete:
+          type: integer
+          description: Number of pages successfully transmitted.
+        duration:
+          type: integer
+          description: Transmission duration in seconds.
+        watermark:
+          type: string
+        subject:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        createdDate:
+          type: string
+          format: date-time
+        updatedDate:
+          type: string
+          format: date-time
+    SendFaxRequest:
+      type: object
+      required:
+      - recipientFax
+      properties:
+        recipientFax:
+          type: string
+          description: Destination fax number in E.164 or national format.
+          example: '12345678900'
+        recipientName:
+          type: string
+          description: Name of the recipient.
+          example: John Snow
+        faxNumber:
+          type: string
+          description: The account fax number to send from (caller id).
+        subject:
+          type: string
+          description: Subject line used on the cover page.
+        notes:
+          type: string
+          description: Notes or message body used on the cover page.
+        coverPage:
+          type: boolean
+          description: Whether to include a cover page.
+          default: false
+        coverPageId:
+          type: string
+          description: Identifier of a saved cover page template to use.
+        attachments:
+          type: array
+          description: One or more document files to fax.
+          items:
+            type: string
+            format: binary
+        attachmentUrls:
+          type: array
+          description: Publicly reachable document URLs to fax instead of file uploads.
+          items:
+            type: string
+            format: uri
+        scheduledDate:
+          type: string
+          format: date-time
+          description: Future time at which to send the fax (ISO 8601).
+        tags:
+          type: array
+          description: Tags to associate with the fax for reporting and search.
+          items:
+            type: string
+    ResendFaxRequest:
+      type: object
+      properties:
+        recipientFax:
+          type: string
+          description: Optional new destination fax number to resend to.
+          example: '12345678900'
+    FaxList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fax'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          description: Human-readable error message.
+        code:
+          type: string
+          description: Machine-readable error code.
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded. Fax history and reports endpoints are limited to a fixed number of calls per minute; subsequent requests return 429 until the window resets.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed or missing required parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    MessageId:
+      name: messageId
+      in: path
+      required: true
+      description: Unique identifier of the fax message.
+      schema:
+        type: string
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: bearer
+      description: 'API key generated in the Documo web app under Settings > API. The key is sent in the Authorization header. Documo documents this as `Authorization: Basic <API_KEY>`, where the API key itself acts as the bearer credential. Each key carries an admin or user access level that determines which endpoints it may call.'

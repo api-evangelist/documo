@@ -1,0 +1,179 @@
+openapi: 3.0.1
+info:
+  title: Documo Account Webhooks API
+  description: REST API for the Documo (mFax) cloud fax and document delivery platform. The API is organized around REST, accepts form-encoded and JSON request bodies, returns JSON-encoded responses, and is secured with an API key passed in the Authorization header. Send and receive faxes, manage fax numbers, subscribe to delivery events via webhooks, and read account information.
+  termsOfService: https://www.documo.com/terms-of-service
+  contact:
+    name: Documo Support
+    url: https://help.documo.com/
+  version: '1.0'
+servers:
+- url: https://api.documo.com/v1
+  description: Documo production API
+security:
+- apiKey: []
+tags:
+- name: Webhooks
+  description: Manage webhook subscriptions for fax and number events.
+paths:
+  /webhooks:
+    get:
+      operationId: listWebhooks
+      tags:
+      - Webhooks
+      summary: List webhooks
+      description: Lists webhook subscriptions configured on the account.
+      responses:
+        '200':
+          description: A list of webhooks.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createWebhook
+      tags:
+      - Webhooks
+      summary: Create a webhook
+      description: Creates a webhook subscription that posts event payloads to a target URL. Webhooks can be set at the account level or scoped to a specific number.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWebhookRequest'
+      responses:
+        '200':
+          description: The created webhook.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /webhooks/{webhookId}:
+    delete:
+      operationId: deleteWebhook
+      tags:
+      - Webhooks
+      summary: Delete a webhook
+      description: Deletes a webhook subscription by id.
+      parameters:
+      - name: webhookId
+        in: path
+        required: true
+        description: Identifier of the webhook subscription.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Webhook deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResult'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    CreateWebhookRequest:
+      type: object
+      required:
+      - url
+      - events
+      properties:
+        url:
+          type: string
+          format: uri
+          description: HTTPS endpoint that receives event payloads.
+          example: https://example.com/webhooks/documo
+        events:
+          type: array
+          description: Event types to subscribe to.
+          items:
+            type: string
+            enum:
+            - fax.v1.inbound.succeed
+            - fax.v1.inbound.failed
+            - fax.v1.outbound.succeed
+            - fax.v1.outbound.failed
+            - fax.v1.number.add
+            - fax.v1.number.release
+        faxNumber:
+          type: string
+          description: Optional number to scope the webhook to; when omitted the webhook applies at the account level.
+    Webhook:
+      type: object
+      properties:
+        webhookId:
+          type: string
+        url:
+          type: string
+          format: uri
+        events:
+          type: array
+          items:
+            type: string
+        faxNumber:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+    WebhookList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Webhook'
+        total:
+          type: integer
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          description: Human-readable error message.
+        code:
+          type: string
+          description: Machine-readable error code.
+    DeleteResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        id:
+          type: string
+  responses:
+    BadRequest:
+      description: The request was malformed or missing required parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: bearer
+      description: 'API key generated in the Documo web app under Settings > API. The key is sent in the Authorization header. Documo documents this as `Authorization: Basic <API_KEY>`, where the API key itself acts as the bearer credential. Each key carries an admin or user access level that determines which endpoints it may call.'
