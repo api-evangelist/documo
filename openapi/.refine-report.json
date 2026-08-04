@@ -1,0 +1,20 @@
+{
+  "provider": "documo",
+  "sources": [
+    "documo-account-api-openapi.yml",
+    "documo-fax-api-openapi.yml",
+    "documo-numbers-api-openapi.yml",
+    "documo-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "documo-account-api-openapi.yml",
+    "documo-fax-api-openapi.yml",
+    "documo-numbers-api-openapi.yml",
+    "documo-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
