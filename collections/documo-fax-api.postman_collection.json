@@ -1,0 +1,1683 @@
+{
+  "item": [
+    {
+      "id": "79b1d935-0f6f-4624-9ab9-10f18e0852b0",
+      "name": "Fax",
+      "description": {
+        "content": "Send, resend, retrieve, list, and download faxes.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8b7a474f-0cb3-4f1d-86c4-b312ffc9d104",
+          "name": "Send a fax",
+          "request": {
+            "name": "Send a fax",
+            "description": {
+              "content": "Sends a fax to one or more recipients. Documents may be supplied as file attachments (multipart/form-data) or as document URLs. Supports an optional cover page, scheduled send time, tags, and custom fields. The send endpoint exposes the same options available in the web portal.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fax",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "recipientFax",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) Destination fax number in E.164 or national format."
+                },
+                {
+                  "key": "recipientName",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Name of the recipient."
+                },
+                {
+                  "key": "faxNumber",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "The account fax number to send from (caller id)."
+                },
+                {
+                  "key": "subject",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Subject line used on the cover page."
+                },
+                {
+                  "key": "notes",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Notes or message body used on the cover page."
+                },
+                {
+                  "key": "coverPage",
+                  "value": "false",
+                  "type": "text",
+                  "description": "Whether to include a cover page."
+                },
+                {
+                  "key": "coverPageId",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Identifier of a saved cover page template to use."
+                },
+                {
+                  "key": "attachments",
+                  "value": "[\"<binary>\",\"<binary>\"]",
+                  "type": "text",
+                  "description": "One or more document files to fax."
+                },
+                {
+                  "key": "attachmentUrls",
+                  "value": "[\"<uri>\",\"<uri>\"]",
+                  "type": "text",
+                  "description": "Publicly reachable document URLs to fax instead of file uploads."
+                },
+                {
+                  "key": "scheduledDate",
+                  "value": "<dateTime>",
+                  "type": "text",
+                  "description": "Future time at which to send the fax (ISO 8601)."
+                },
+                {
+                  "key": "tags",
+                  "value": "[\"<string>\",\"<string>\"]",
+                  "type": "text",
+                  "description": "Tags to associate with the fax for reporting and search."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bb557bcf-af35-416b-b809-43d2eb0fc433",
+              "name": "Fax accepted for delivery.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Destination fax number in E.164 or national format.",
+                        "type": "text/plain"
+                      },
+                      "key": "recipientFax",
+                      "value": "12345678900",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Name of the recipient.",
+                        "type": "text/plain"
+                      },
+                      "key": "recipientName",
+                      "value": "John Snow",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The account fax number to send from (caller id).",
+                        "type": "text/plain"
+                      },
+                      "key": "faxNumber",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Subject line used on the cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "subject",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Notes or message body used on the cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "notes",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Whether to include a cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "coverPage",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Identifier of a saved cover page template to use.",
+                        "type": "text/plain"
+                      },
+                      "key": "coverPageId",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "One or more document files to fax.",
+                        "type": "text/plain"
+                      },
+                      "key": "attachments",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Publicly reachable document URLs to fax instead of file uploads.",
+                        "type": "text/plain"
+                      },
+                      "key": "attachmentUrls",
+                      "value": "[\"<uri>\",\"<uri>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Future time at which to send the fax (ISO 8601).",
+                        "type": "text/plain"
+                      },
+                      "key": "scheduledDate",
+                      "value": "<dateTime>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Tags to associate with the fax for reporting and search.",
+                        "type": "text/plain"
+                      },
+                      "key": "tags",
+                      "value": "[\"<string>\",\"<string>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messageId\": \"string\",\n  \"deliveryId\": \"string\",\n  \"status\": \"success\",\n  \"direction\": \"outbound\",\n  \"recipientFax\": \"string\",\n  \"recipientName\": \"string\",\n  \"faxNumber\": \"string\",\n  \"faxCsid\": \"string\",\n  \"faxCallerId\": \"string\",\n  \"pagesCount\": 3405,\n  \"pagesComplete\": 3666,\n  \"duration\": 2423,\n  \"watermark\": \"string\",\n  \"subject\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"createdDate\": \"2008-12-13T22:00:58.588Z\",\n  \"updatedDate\": \"2013-05-08T16:56:11.563Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2998cc99-c02b-4295-befc-5e0de051d988",
+              "name": "The request was malformed or missing required parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Destination fax number in E.164 or national format.",
+                        "type": "text/plain"
+                      },
+                      "key": "recipientFax",
+                      "value": "12345678900",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Name of the recipient.",
+                        "type": "text/plain"
+                      },
+                      "key": "recipientName",
+                      "value": "John Snow",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The account fax number to send from (caller id).",
+                        "type": "text/plain"
+                      },
+                      "key": "faxNumber",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Subject line used on the cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "subject",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Notes or message body used on the cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "notes",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Whether to include a cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "coverPage",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Identifier of a saved cover page template to use.",
+                        "type": "text/plain"
+                      },
+                      "key": "coverPageId",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "One or more document files to fax.",
+                        "type": "text/plain"
+                      },
+                      "key": "attachments",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Publicly reachable document URLs to fax instead of file uploads.",
+                        "type": "text/plain"
+                      },
+                      "key": "attachmentUrls",
+                      "value": "[\"<uri>\",\"<uri>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Future time at which to send the fax (ISO 8601).",
+                        "type": "text/plain"
+                      },
+                      "key": "scheduledDate",
+                      "value": "<dateTime>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Tags to associate with the fax for reporting and search.",
+                        "type": "text/plain"
+                      },
+                      "key": "tags",
+                      "value": "[\"<string>\",\"<string>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2dd0fdd-8ea7-45ab-9745-c384814e5f04",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Destination fax number in E.164 or national format.",
+                        "type": "text/plain"
+                      },
+                      "key": "recipientFax",
+                      "value": "12345678900",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Name of the recipient.",
+                        "type": "text/plain"
+                      },
+                      "key": "recipientName",
+                      "value": "John Snow",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The account fax number to send from (caller id).",
+                        "type": "text/plain"
+                      },
+                      "key": "faxNumber",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Subject line used on the cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "subject",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Notes or message body used on the cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "notes",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Whether to include a cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "coverPage",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Identifier of a saved cover page template to use.",
+                        "type": "text/plain"
+                      },
+                      "key": "coverPageId",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "One or more document files to fax.",
+                        "type": "text/plain"
+                      },
+                      "key": "attachments",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Publicly reachable document URLs to fax instead of file uploads.",
+                        "type": "text/plain"
+                      },
+                      "key": "attachmentUrls",
+                      "value": "[\"<uri>\",\"<uri>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Future time at which to send the fax (ISO 8601).",
+                        "type": "text/plain"
+                      },
+                      "key": "scheduledDate",
+                      "value": "<dateTime>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Tags to associate with the fax for reporting and search.",
+                        "type": "text/plain"
+                      },
+                      "key": "tags",
+                      "value": "[\"<string>\",\"<string>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b26dbce-1522-4be5-bc77-c69c787b971e",
+              "name": "Rate limit exceeded. Fax history and reports endpoints are limited to a fixed number of calls per minute; subsequent requests return 429 until the window resets.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Destination fax number in E.164 or national format.",
+                        "type": "text/plain"
+                      },
+                      "key": "recipientFax",
+                      "value": "12345678900",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Name of the recipient.",
+                        "type": "text/plain"
+                      },
+                      "key": "recipientName",
+                      "value": "John Snow",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "The account fax number to send from (caller id).",
+                        "type": "text/plain"
+                      },
+                      "key": "faxNumber",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Subject line used on the cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "subject",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Notes or message body used on the cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "notes",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Whether to include a cover page.",
+                        "type": "text/plain"
+                      },
+                      "key": "coverPage",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Identifier of a saved cover page template to use.",
+                        "type": "text/plain"
+                      },
+                      "key": "coverPageId",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "One or more document files to fax.",
+                        "type": "text/plain"
+                      },
+                      "key": "attachments",
+                      "value": "[\"<binary>\",\"<binary>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Publicly reachable document URLs to fax instead of file uploads.",
+                        "type": "text/plain"
+                      },
+                      "key": "attachmentUrls",
+                      "value": "[\"<uri>\",\"<uri>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Future time at which to send the fax (ISO 8601).",
+                        "type": "text/plain"
+                      },
+                      "key": "scheduledDate",
+                      "value": "<dateTime>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Tags to associate with the fax for reporting and search.",
+                        "type": "text/plain"
+                      },
+                      "key": "tags",
+                      "value": "[\"<string>\",\"<string>\"]",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ab98881-961d-4311-bd01-138d446ab285",
+          "name": "Get a fax",
+          "request": {
+            "name": "Get a fax",
+            "description": {
+              "content": "Retrieves the detail and current status of a single fax by its message id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fax",
+                ":messageId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "messageId",
+                  "description": "(Required) Unique identifier of the fax message."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0192196d-ff73-41f5-b96b-6d002538be53",
+              "name": "Fax detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    ":messageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) Unique identifier of the fax message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messageId\": \"string\",\n  \"deliveryId\": \"string\",\n  \"status\": \"success\",\n  \"direction\": \"outbound\",\n  \"recipientFax\": \"string\",\n  \"recipientName\": \"string\",\n  \"faxNumber\": \"string\",\n  \"faxCsid\": \"string\",\n  \"faxCallerId\": \"string\",\n  \"pagesCount\": 6488,\n  \"pagesComplete\": 155,\n  \"duration\": 2866,\n  \"watermark\": \"string\",\n  \"subject\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"createdDate\": \"2025-12-08T03:38:11.288Z\",\n  \"updatedDate\": \"1999-07-04T06:26:36.192Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37df6d22-0b6c-4f76-a889-56b2c5dbf59c",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    ":messageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) Unique identifier of the fax message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "056488a8-41d6-45cd-bb11-77a685a8b686",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    ":messageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) Unique identifier of the fax message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11b50af7-1210-4710-9e9e-0e8427069a0b",
+          "name": "Resend a fax",
+          "request": {
+            "name": "Resend a fax",
+            "description": {
+              "content": "Resends a fax that previously failed by submitting the message id of the original fax. An optional recipientFax may be supplied to change the destination number.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fax",
+                ":messageId",
+                "resend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "messageId",
+                  "description": "(Required) Unique identifier of the fax message."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipientFax\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4b62f03e-1320-4f25-8ebb-e84def6062ab",
+              "name": "Fax accepted for re-delivery.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    ":messageId",
+                    "resend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) Unique identifier of the fax message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipientFax\": \"12345678900\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messageId\": \"string\",\n  \"deliveryId\": \"string\",\n  \"status\": \"success\",\n  \"direction\": \"outbound\",\n  \"recipientFax\": \"string\",\n  \"recipientName\": \"string\",\n  \"faxNumber\": \"string\",\n  \"faxCsid\": \"string\",\n  \"faxCallerId\": \"string\",\n  \"pagesCount\": 6488,\n  \"pagesComplete\": 155,\n  \"duration\": 2866,\n  \"watermark\": \"string\",\n  \"subject\": \"string\",\n  \"tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"createdDate\": \"2025-12-08T03:38:11.288Z\",\n  \"updatedDate\": \"1999-07-04T06:26:36.192Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "40933bec-93dd-4ec3-adce-ad5381ce3af8",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    ":messageId",
+                    "resend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) Unique identifier of the fax message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipientFax\": \"12345678900\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b695a5a7-23e4-4afd-95dc-1a7000e74231",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    ":messageId",
+                    "resend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) Unique identifier of the fax message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"recipientFax\": \"12345678900\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e13dbb2f-c717-4c31-a469-50206d26f691",
+          "name": "Download a fax",
+          "request": {
+            "name": "Download a fax",
+            "description": {
+              "content": "Downloads the document for a delivered or received fax by message id. The format query parameter selects the returned file type.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "fax",
+                ":messageId",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "pdf",
+                  "description": "File format to return."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "messageId",
+                  "description": "(Required) Unique identifier of the fax message."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/pdf"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2b2de065-f488-4aca-bc3d-b455f61d1d17",
+              "name": "Fax document.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    ":messageId",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "pdf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) Unique identifier of the fax message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/pdf"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/pdf"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "644222be-e6ee-4c23-8ea2-42f7f874c246",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    ":messageId",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "pdf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) Unique identifier of the fax message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f36916f4-9805-4ce2-b9bf-932d2bdd6637",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "fax",
+                    ":messageId",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "pdf"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "messageId",
+                      "description": "(Required) Unique identifier of the fax message."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1116d623-ae16-46c4-8960-85480d2158a9",
+          "name": "List faxes (fax history)",
+          "request": {
+            "name": "List faxes (fax history)",
+            "description": {
+              "content": "Returns a paginated list of faxes (inbound and outbound) in the account. This fax history endpoint is rate limited; exceeding the limit returns HTTP 429.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "faxes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "direction",
+                  "value": "<string>",
+                  "description": "Filter by fax direction."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by fax status."
+                },
+                {
+                  "disabled": false,
+                  "key": "dateFrom",
+                  "value": "<dateTime>",
+                  "description": "Inclusive lower bound for the fax date (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "dateTo",
+                  "value": "<dateTime>",
+                  "description": "Inclusive upper bound for the fax date (ISO 8601)."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of records to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Number of records to skip for pagination."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7a8871b2-c442-4db4-9f5f-1a4807641f30",
+              "name": "A list of faxes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "faxes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "dateTo",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"items\": [\n    {\n      \"messageId\": \"string\",\n      \"deliveryId\": \"string\",\n      \"status\": \"success\",\n      \"direction\": \"outbound\",\n      \"recipientFax\": \"string\",\n      \"recipientName\": \"string\",\n      \"faxNumber\": \"string\",\n      \"faxCsid\": \"string\",\n      \"faxCallerId\": \"string\",\n      \"pagesCount\": 9903,\n      \"pagesComplete\": 6288,\n      \"duration\": 107,\n      \"watermark\": \"string\",\n      \"subject\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"createdDate\": \"2013-04-14T06:21:06.922Z\",\n      \"updatedDate\": \"2008-05-26T07:40:57.413Z\"\n    },\n    {\n      \"messageId\": \"string\",\n      \"deliveryId\": \"string\",\n      \"status\": \"success\",\n      \"direction\": \"inbound\",\n      \"recipientFax\": \"string\",\n      \"recipientName\": \"string\",\n      \"faxNumber\": \"string\",\n      \"faxCsid\": \"string\",\n      \"faxCallerId\": \"string\",\n      \"pagesCount\": 9941,\n      \"pagesComplete\": 2865,\n      \"duration\": 6157,\n      \"watermark\": \"string\",\n      \"subject\": \"string\",\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"createdDate\": \"2024-09-19T06:42:17.108Z\",\n      \"updatedDate\": \"2014-04-18T20:07:58.304Z\"\n    }\n  ],\n  \"total\": 9689,\n  \"limit\": 5593,\n  \"offset\": 4016\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ceda047-652c-401e-a702-1dbf581fbdf2",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "faxes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "dateTo",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc4a01bf-8fd7-4673-8198-dee72b2395fb",
+              "name": "Rate limit exceeded. Fax history and reports endpoints are limited to a fixed number of calls per minute; subsequent requests return 429 until the window resets.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "faxes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "direction",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "dateFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "dateTo",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.documo.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "44ed3996-97fb-4f2a-9575-6c219dbbac73",
+    "name": "Documo Account Fax API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Documo (mFax) cloud fax and document delivery platform. The API is organized around REST, accepts form-encoded and JSON request bodies, returns JSON-encoded responses, and is secured with an API key passed in the Authorization header. Send and receive faxes, manage fax numbers, subscribe to delivery events via webhooks, and read account information.\n\nContact Support:\n Name: Documo Support",
+      "type": "text/plain"
+    }
+  }
+}

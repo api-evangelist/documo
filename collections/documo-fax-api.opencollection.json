@@ -1,0 +1,155 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Documo Account Fax API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Fax",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send a fax",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.documo.com/v1/fax/send",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Sends a fax to one or more recipients. Documents may be supplied as file attachments (multipart/form-data) or as document URLs. Supports an optional cover page, scheduled send time, tags, and custom fields. The send endpoint exposes the same options available in the web portal."
+        },
+        {
+          "info": {
+            "name": "Get a fax",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/fax/:messageId",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the fax message."
+              }
+            ]
+          },
+          "docs": "Retrieves the detail and current status of a single fax by its message id."
+        },
+        {
+          "info": {
+            "name": "Resend a fax",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.documo.com/v1/fax/:messageId/resend",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the fax message."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resends a fax that previously failed by submitting the message id of the original fax. An optional recipientFax may be supplied to change the destination number."
+        },
+        {
+          "info": {
+            "name": "Download a fax",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/fax/:messageId/download",
+            "params": [
+              {
+                "name": "messageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the fax message."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "File format to return."
+              }
+            ]
+          },
+          "docs": "Downloads the document for a delivered or received fax by message id. The format query parameter selects the returned file type."
+        },
+        {
+          "info": {
+            "name": "List faxes (fax history)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/faxes",
+            "params": [
+              {
+                "name": "direction",
+                "value": "",
+                "type": "query",
+                "description": "Filter by fax direction."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by fax status."
+              },
+              {
+                "name": "dateFrom",
+                "value": "",
+                "type": "query",
+                "description": "Inclusive lower bound for the fax date (ISO 8601)."
+              },
+              {
+                "name": "dateTo",
+                "value": "",
+                "type": "query",
+                "description": "Inclusive upper bound for the fax date (ISO 8601)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip for pagination."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of faxes (inbound and outbound) in the account. This fax history endpoint is rate limited; exceeding the limit returns HTTP 429."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

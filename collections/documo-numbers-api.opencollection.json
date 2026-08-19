@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Documo Account Numbers API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Numbers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List provisioned numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/numbers",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists the inbound fax numbers provisioned on the account."
+        },
+        {
+          "info": {
+            "name": "Provision a number",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.documo.com/v1/numbers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Provisions (adds) an available inbound fax number to the account."
+        },
+        {
+          "info": {
+            "name": "Search available numbers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.documo.com/v1/numbers/search",
+            "params": [
+              {
+                "name": "areaCode",
+                "value": "",
+                "type": "query",
+                "description": "Area code to search within."
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "State or region code."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "ISO country code."
+              }
+            ]
+          },
+          "docs": "Searches for available inbound fax numbers that can be provisioned, optionally filtered by area code, region, or country."
+        },
+        {
+          "info": {
+            "name": "Release a number",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.documo.com/v1/numbers/:numberId",
+            "params": [
+              {
+                "name": "numberId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the provisioned number."
+              }
+            ]
+          },
+          "docs": "Releases (removes) a provisioned inbound fax number from the account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

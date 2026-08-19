@@ -1,0 +1,162 @@
+{
+  "item": [
+    {
+      "id": "5b8f3dd6-e2d0-43ea-bd31-1f6568dcf955",
+      "name": "Account",
+      "description": {
+        "content": "Read account profile and settings.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1a702082-34d6-4688-8dc4-d9f45f6d5c24",
+          "name": "Get account",
+          "request": {
+            "name": "Get account",
+            "description": {
+              "content": "Retrieves the authenticated account's profile and settings.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1f36a0d3-6ded-4874-a1ed-8fc27a4c2a09",
+              "name": "Account detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accountId\": \"string\",\n  \"name\": \"string\",\n  \"email\": \"ykrGkjvb@HVqwuhfjNrbTUkMnGWU.btom\",\n  \"accessLevel\": \"admin\",\n  \"plan\": \"string\",\n  \"createdDate\": \"1984-10-27T01:12:27.196Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c493aeb-1188-4042-ae8a-1d8675d00eff",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\",\n  \"code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.documo.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5d516e4d-7f0a-438a-8f9d-76b809b87623",
+    "name": "Documo Account API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Documo (mFax) cloud fax and document delivery platform. The API is organized around REST, accepts form-encoded and JSON request bodies, returns JSON-encoded responses, and is secured with an API key passed in the Authorization header. Send and receive faxes, manage fax numbers, subscribe to delivery events via webhooks, and read account information.\n\nContact Support:\n Name: Documo Support",
+      "type": "text/plain"
+    }
+  }
+}
