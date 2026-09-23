@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Documo Account Webhooks API
+  title: Documo Webhooks API
   description: REST API for the Documo (mFax) cloud fax and document delivery platform. The API is organized around REST, accepts form-encoded and JSON request bodies, returns JSON-encoded responses, and is secured with an API key passed in the Authorization header. Send and receive faxes, manage fax numbers, subscribe to delivery events via webhooks, and read account information.
   termsOfService: https://www.documo.com/terms-of-service
   contact:
@@ -82,32 +82,25 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    CreateWebhookRequest:
+    Error:
       type: object
-      required:
-      - url
-      - events
       properties:
-        url:
+        success:
+          type: boolean
+          example: false
+        message:
           type: string
-          format: uri
-          description: HTTPS endpoint that receives event payloads.
-          example: https://example.com/webhooks/documo
-        events:
-          type: array
-          description: Event types to subscribe to.
-          items:
-            type: string
-            enum:
-            - fax.v1.inbound.succeed
-            - fax.v1.inbound.failed
-            - fax.v1.outbound.succeed
-            - fax.v1.outbound.failed
-            - fax.v1.number.add
-            - fax.v1.number.release
-        faxNumber:
+          description: Human-readable error message.
+        code:
           type: string
-          description: Optional number to scope the webhook to; when omitted the webhook applies at the account level.
+          description: Machine-readable error code.
+    DeleteResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        id:
+          type: string
     Webhook:
       type: object
       properties:
@@ -134,32 +127,33 @@ components:
             $ref: '#/components/schemas/Webhook'
         total:
           type: integer
-    Error:
+    CreateWebhookRequest:
       type: object
+      required:
+      - url
+      - events
       properties:
-        success:
-          type: boolean
-          example: false
-        message:
+        url:
           type: string
-          description: Human-readable error message.
-        code:
+          format: uri
+          description: HTTPS endpoint that receives event payloads.
+          example: https://example.com/webhooks/documo
+        events:
+          type: array
+          description: Event types to subscribe to.
+          items:
+            type: string
+            enum:
+            - fax.v1.inbound.succeed
+            - fax.v1.inbound.failed
+            - fax.v1.outbound.succeed
+            - fax.v1.outbound.failed
+            - fax.v1.number.add
+            - fax.v1.number.release
+        faxNumber:
           type: string
-          description: Machine-readable error code.
-    DeleteResult:
-      type: object
-      properties:
-        success:
-          type: boolean
-        id:
-          type: string
+          description: Optional number to scope the webhook to; when omitted the webhook applies at the account level.
   responses:
-    BadRequest:
-      description: The request was malformed or missing required parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Missing or invalid API key.
       content:
@@ -168,6 +162,12 @@ components:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed or missing required parameters.
       content:
         application/json:
           schema:

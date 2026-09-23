@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Documo Account Numbers API
+  title: Documo Numbers API
   description: REST API for the Documo (mFax) cloud fax and document delivery platform. The API is organized around REST, accepts form-encoded and JSON request bodies, returns JSON-encoded responses, and is secured with an API key passed in the Authorization header. Send and receive faxes, manage fax numbers, subscribe to delivery events via webhooks, and read account information.
   termsOfService: https://www.documo.com/terms-of-service
   contact:
@@ -130,65 +130,7 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    BadRequest:
-      description: The request was malformed or missing required parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    FaxNumber:
-      type: object
-      properties:
-        numberId:
-          type: string
-        faxNumber:
-          type: string
-        label:
-          type: string
-        region:
-          type: string
-        country:
-          type: string
-        status:
-          type: string
-        createdDate:
-          type: string
-          format: date-time
-    NumberList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/FaxNumber'
-        total:
-          type: integer
-    ProvisionNumberRequest:
-      type: object
-      required:
-      - faxNumber
-      properties:
-        faxNumber:
-          type: string
-          description: The available number to provision, in E.164 format.
-          example: '+12025550143'
-        label:
-          type: string
-          description: Friendly label for the number.
     Error:
       type: object
       properties:
@@ -208,6 +150,64 @@ components:
           type: boolean
         id:
           type: string
+    ProvisionNumberRequest:
+      type: object
+      required:
+      - faxNumber
+      properties:
+        faxNumber:
+          type: string
+          description: The available number to provision, in E.164 format.
+          example: '+12025550143'
+        label:
+          type: string
+          description: Friendly label for the number.
+    NumberList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaxNumber'
+        total:
+          type: integer
+    FaxNumber:
+      type: object
+      properties:
+        numberId:
+          type: string
+        faxNumber:
+          type: string
+        label:
+          type: string
+        region:
+          type: string
+        country:
+          type: string
+        status:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed or missing required parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKey:
       type: http

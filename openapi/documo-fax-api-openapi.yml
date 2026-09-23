@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Documo Account Fax API
+  title: Documo Fax API
   description: REST API for the Documo (mFax) cloud fax and document delivery platform. The API is organized around REST, accepts form-encoded and JSON request bodies, returns JSON-encoded responses, and is secured with an API key passed in the Authorization header. Send and receive faxes, manage fax numbers, subscribe to delivery events via webhooks, and read account information.
   termsOfService: https://www.documo.com/terms-of-service
   contact:
@@ -187,59 +187,31 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   schemas:
-    Fax:
+    Error:
       type: object
       properties:
-        messageId:
+        success:
+          type: boolean
+          example: false
+        message:
           type: string
-          description: Unique identifier of the fax message.
-        deliveryId:
+          description: Human-readable error message.
+        code:
           type: string
-          description: Identifier of the delivery attempt.
-        status:
-          type: string
-          description: Current status of the fax (e.g. queued, sending, success, failed).
-          example: success
-        direction:
-          type: string
-          enum:
-          - inbound
-          - outbound
-        recipientFax:
-          type: string
-        recipientName:
-          type: string
-        faxNumber:
-          type: string
-          description: Account number the fax was sent from or received on.
-        faxCsid:
-          type: string
-          description: Called subscriber identification reported by the remote device.
-        faxCallerId:
-          type: string
-        pagesCount:
-          type: integer
-          description: Total number of pages in the fax.
-        pagesComplete:
-          type: integer
-          description: Number of pages successfully transmitted.
-        duration:
-          type: integer
-          description: Transmission duration in seconds.
-        watermark:
-          type: string
-        subject:
-          type: string
-        tags:
+          description: Machine-readable error code.
+    FaxList:
+      type: object
+      properties:
+        items:
           type: array
           items:
-            type: string
-        createdDate:
-          type: string
-          format: date-time
-        updatedDate:
-          type: string
-          format: date-time
+            $ref: '#/components/schemas/Fax'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
     SendFaxRequest:
       type: object
       required:
@@ -297,46 +269,76 @@ components:
           type: string
           description: Optional new destination fax number to resend to.
           example: '12345678900'
-    FaxList:
+    Fax:
       type: object
       properties:
-        items:
+        messageId:
+          type: string
+          description: Unique identifier of the fax message.
+        deliveryId:
+          type: string
+          description: Identifier of the delivery attempt.
+        status:
+          type: string
+          description: Current status of the fax (e.g. queued, sending, success, failed).
+          example: success
+        direction:
+          type: string
+          enum:
+          - inbound
+          - outbound
+        recipientFax:
+          type: string
+        recipientName:
+          type: string
+        faxNumber:
+          type: string
+          description: Account number the fax was sent from or received on.
+        faxCsid:
+          type: string
+          description: Called subscriber identification reported by the remote device.
+        faxCallerId:
+          type: string
+        pagesCount:
+          type: integer
+          description: Total number of pages in the fax.
+        pagesComplete:
+          type: integer
+          description: Number of pages successfully transmitted.
+        duration:
+          type: integer
+          description: Transmission duration in seconds.
+        watermark:
+          type: string
+        subject:
+          type: string
+        tags:
           type: array
           items:
-            $ref: '#/components/schemas/Fax'
-        total:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        message:
+            type: string
+        createdDate:
           type: string
-          description: Human-readable error message.
-        code:
+          format: date-time
+        updatedDate:
           type: string
-          description: Machine-readable error code.
+          format: date-time
+  parameters:
+    MessageId:
+      name: messageId
+      in: path
+      required: true
+      description: Unique identifier of the fax message.
+      schema:
+        type: string
   responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     TooManyRequests:
       description: Rate limit exceeded. Fax history and reports endpoints are limited to a fixed number of calls per minute; subsequent requests return 429 until the window resets.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed or missing required parameters.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:
@@ -347,14 +349,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    MessageId:
-      name: messageId
-      in: path
-      required: true
-      description: Unique identifier of the fax message.
-      schema:
-        type: string
+    BadRequest:
+      description: The request was malformed or missing required parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKey:
       type: http
