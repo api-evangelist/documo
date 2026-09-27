@@ -186,89 +186,32 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded. Fax history and reports endpoints are limited to a fixed number of calls per minute; subsequent requests return 429 until the window resets.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed or missing required parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        message:
-          type: string
-          description: Human-readable error message.
-        code:
-          type: string
-          description: Machine-readable error code.
-    FaxList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Fax'
-        total:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-    SendFaxRequest:
-      type: object
-      required:
-      - recipientFax
-      properties:
-        recipientFax:
-          type: string
-          description: Destination fax number in E.164 or national format.
-          example: '12345678900'
-        recipientName:
-          type: string
-          description: Name of the recipient.
-          example: John Snow
-        faxNumber:
-          type: string
-          description: The account fax number to send from (caller id).
-        subject:
-          type: string
-          description: Subject line used on the cover page.
-        notes:
-          type: string
-          description: Notes or message body used on the cover page.
-        coverPage:
-          type: boolean
-          description: Whether to include a cover page.
-          default: false
-        coverPageId:
-          type: string
-          description: Identifier of a saved cover page template to use.
-        attachments:
-          type: array
-          description: One or more document files to fax.
-          items:
-            type: string
-            format: binary
-        attachmentUrls:
-          type: array
-          description: Publicly reachable document URLs to fax instead of file uploads.
-          items:
-            type: string
-            format: uri
-        scheduledDate:
-          type: string
-          format: date-time
-          description: Future time at which to send the fax (ISO 8601).
-        tags:
-          type: array
-          description: Tags to associate with the fax for reporting and search.
-          items:
-            type: string
-    ResendFaxRequest:
-      type: object
-      properties:
-        recipientFax:
-          type: string
-          description: Optional new destination fax number to resend to.
-          example: '12345678900'
     Fax:
       type: object
       properties:
@@ -322,6 +265,88 @@ components:
         updatedDate:
           type: string
           format: date-time
+    FaxList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fax'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+    ResendFaxRequest:
+      type: object
+      properties:
+        recipientFax:
+          type: string
+          description: Optional new destination fax number to resend to.
+          example: '12345678900'
+    SendFaxRequest:
+      type: object
+      required:
+      - recipientFax
+      properties:
+        recipientFax:
+          type: string
+          description: Destination fax number in E.164 or national format.
+          example: '12345678900'
+        recipientName:
+          type: string
+          description: Name of the recipient.
+          example: John Snow
+        faxNumber:
+          type: string
+          description: The account fax number to send from (caller id).
+        subject:
+          type: string
+          description: Subject line used on the cover page.
+        notes:
+          type: string
+          description: Notes or message body used on the cover page.
+        coverPage:
+          type: boolean
+          description: Whether to include a cover page.
+          default: false
+        coverPageId:
+          type: string
+          description: Identifier of a saved cover page template to use.
+        attachments:
+          type: array
+          description: One or more document files to fax.
+          items:
+            type: string
+            format: binary
+        attachmentUrls:
+          type: array
+          description: Publicly reachable document URLs to fax instead of file uploads.
+          items:
+            type: string
+            format: uri
+        scheduledDate:
+          type: string
+          format: date-time
+          description: Future time at which to send the fax (ISO 8601).
+        tags:
+          type: array
+          description: Tags to associate with the fax for reporting and search.
+          items:
+            type: string
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          description: Human-readable error message.
+        code:
+          type: string
+          description: Machine-readable error code.
   parameters:
     MessageId:
       name: messageId
@@ -330,31 +355,6 @@ components:
       description: Unique identifier of the fax message.
       schema:
         type: string
-  responses:
-    TooManyRequests:
-      description: Rate limit exceeded. Fax history and reports endpoints are limited to a fixed number of calls per minute; subsequent requests return 429 until the window resets.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed or missing required parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKey:
       type: http

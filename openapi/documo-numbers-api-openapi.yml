@@ -131,18 +131,33 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
+    FaxNumber:
       type: object
       properties:
-        success:
-          type: boolean
-          example: false
-        message:
+        numberId:
           type: string
-          description: Human-readable error message.
-        code:
+        faxNumber:
           type: string
-          description: Machine-readable error code.
+        label:
+          type: string
+        region:
+          type: string
+        country:
+          type: string
+        status:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+    NumberList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaxNumber'
+        total:
+          type: integer
     DeleteResult:
       type: object
       properties:
@@ -162,42 +177,27 @@ components:
         label:
           type: string
           description: Friendly label for the number.
-    NumberList:
+    Error:
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/FaxNumber'
-        total:
-          type: integer
-    FaxNumber:
-      type: object
-      properties:
-        numberId:
+        success:
+          type: boolean
+          example: false
+        message:
           type: string
-        faxNumber:
+          description: Human-readable error message.
+        code:
           type: string
-        label:
-          type: string
-        region:
-          type: string
-        country:
-          type: string
-        status:
-          type: string
-        createdDate:
-          type: string
-          format: date-time
+          description: Machine-readable error code.
   responses:
-    Unauthorized:
-      description: Missing or invalid API key.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
+    Unauthorized:
+      description: Missing or invalid API key.
       content:
         application/json:
           schema:
