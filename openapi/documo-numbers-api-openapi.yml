@@ -130,7 +130,47 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed or missing required parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    NumberList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaxNumber'
+        total:
+          type: integer
+    ProvisionNumberRequest:
+      type: object
+      required:
+      - faxNumber
+      properties:
+        faxNumber:
+          type: string
+          description: The available number to provision, in E.164 format.
+          example: '+12025550143'
+        label:
+          type: string
+          description: Friendly label for the number.
     FaxNumber:
       type: object
       properties:
@@ -149,15 +189,6 @@ components:
         createdDate:
           type: string
           format: date-time
-    NumberList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/FaxNumber'
-        total:
-          type: integer
     DeleteResult:
       type: object
       properties:
@@ -165,18 +196,6 @@ components:
           type: boolean
         id:
           type: string
-    ProvisionNumberRequest:
-      type: object
-      required:
-      - faxNumber
-      properties:
-        faxNumber:
-          type: string
-          description: The available number to provision, in E.164 format.
-          example: '+12025550143'
-        label:
-          type: string
-          description: Friendly label for the number.
     Error:
       type: object
       properties:
@@ -189,25 +208,6 @@ components:
         code:
           type: string
           description: Machine-readable error code.
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed or missing required parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKey:
       type: http

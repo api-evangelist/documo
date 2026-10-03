@@ -187,6 +187,12 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource was not found.
       content:
@@ -205,13 +211,27 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
+    FaxList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fax'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+    ResendFaxRequest:
+      type: object
+      properties:
+        recipientFax:
+          type: string
+          description: Optional new destination fax number to resend to.
+          example: '12345678900'
     Fax:
       type: object
       properties:
@@ -265,26 +285,6 @@ components:
         updatedDate:
           type: string
           format: date-time
-    FaxList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Fax'
-        total:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-    ResendFaxRequest:
-      type: object
-      properties:
-        recipientFax:
-          type: string
-          description: Optional new destination fax number to resend to.
-          example: '12345678900'
     SendFaxRequest:
       type: object
       required:
