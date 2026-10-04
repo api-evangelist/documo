@@ -186,45 +186,7 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Rate limit exceeded. Fax history and reports endpoints are limited to a fixed number of calls per minute; subsequent requests return 429 until the window resets.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed or missing required parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    FaxList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Fax'
-        total:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
     ResendFaxRequest:
       type: object
       properties:
@@ -232,6 +194,18 @@ components:
           type: string
           description: Optional new destination fax number to resend to.
           example: '12345678900'
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          description: Human-readable error message.
+        code:
+          type: string
+          description: Machine-readable error code.
     Fax:
       type: object
       properties:
@@ -285,6 +259,19 @@ components:
         updatedDate:
           type: string
           format: date-time
+    FaxList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fax'
+        total:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
     SendFaxRequest:
       type: object
       required:
@@ -335,18 +322,31 @@ components:
           description: Tags to associate with the fax for reporting and search.
           items:
             type: string
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        message:
-          type: string
-          description: Human-readable error message.
-        code:
-          type: string
-          description: Machine-readable error code.
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed or missing required parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded. Fax history and reports endpoints are limited to a fixed number of calls per minute; subsequent requests return 429 until the window resets.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     MessageId:
       name: messageId

@@ -130,35 +130,19 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed or missing required parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    NumberList:
+    Error:
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/FaxNumber'
-        total:
-          type: integer
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+          description: Human-readable error message.
+        code:
+          type: string
+          description: Machine-readable error code.
     ProvisionNumberRequest:
       type: object
       required:
@@ -171,6 +155,13 @@ components:
         label:
           type: string
           description: Friendly label for the number.
+    DeleteResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        id:
+          type: string
     FaxNumber:
       type: object
       properties:
@@ -189,25 +180,34 @@ components:
         createdDate:
           type: string
           format: date-time
-    DeleteResult:
+    NumberList:
       type: object
       properties:
-        success:
-          type: boolean
-        id:
-          type: string
-    Error:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-        message:
-          type: string
-          description: Human-readable error message.
-        code:
-          type: string
-          description: Machine-readable error code.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaxNumber'
+        total:
+          type: integer
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed or missing required parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     apiKey:
       type: http
