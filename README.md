@@ -1,4 +1,4 @@
-# Documo (documo)
+# Documo
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,113 +66,122 @@
 
 Documo (mFax) is a cloud fax and document delivery platform. The Documo REST API lets developers send and receive faxes, provision and manage fax numbers, subscribe to delivery events via webhooks, and manage account resources over a JSON/HTTPS interface secured with an API key.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/documo/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/documo/refs/heads/main/apis.yml)
+**Areas:** Fax · Cloud Fax · Document Delivery · HIPAA · Communications
 
-## Tags
+## Documo on APIs.io
 
-- Fax
-- Cloud Fax
-- Document Delivery
-- HIPAA
-- Communications
+Everything profiled for Documo is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/documo/](https://apis.io/providers/documo/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (4)
 
-- **Created:** 2026-06-21
-- **Modified:** 2026-06-21
+- [Documo Account API](https://apis.io/apis/documo/documo-account-api/) — Read account profile and settings.
+- [Documo Fax API](https://apis.io/apis/documo/documo-fax-api/) — Send, resend, retrieve, list, and download faxes.
+- [Documo Numbers API](https://apis.io/apis/documo/documo-numbers-api/) — Search, provision, list, and release inbound fax numbers.
+- [Documo Webhooks API](https://apis.io/apis/documo/documo-webhooks-api/) — Manage webhook subscriptions for fax and number events.
 
-## APIs
+### Published properties
 
-### Documo Fax API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Send a fax to one or more recipients with cover page, scheduling, tags, and custom fields; resend a previously failed fax; retrieve fax detail and status; list fax history; and download delivered fax documents as PDF or TIFF.
+#### Agentic access (1)
 
-- **Human URL:** [https://docs.documo.com/](https://docs.documo.com/)
-- **Base URL:** `https://api.documo.com/v1`
+Which operations an agent can call, which act, and which need a human in the loop.
 
-#### Tags
+- [Documo Agentic Access](https://apis.io/agentic-access/documo/documo-agentic-access/)
 
-- Fax
-- Send
-- Receive
+#### Collections (5)
 
-#### Properties
+Postman and Open Collection request collections.
 
-- [Documentation](https://docs.documo.com/)
-- [API Reference](https://docs.documo.com/#send-a-fax)
-- [OpenAPI](openapi/documo-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/documo.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/documo.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Documo API](https://apis.io/collections/documo/open-documo/)
+- [Documo Account API](https://apis.io/collections/documo/open-documo-account-api/)
+- [Documo Account Fax API](https://apis.io/collections/documo/open-documo-fax-api/)
+- [Documo Account Numbers API](https://apis.io/collections/documo/open-documo-numbers-api/)
+- [Documo Account Webhooks API](https://apis.io/collections/documo/open-documo-webhooks-api/)
 
-### Documo Numbers API
+#### Security (3)
 
-Search available inbound fax numbers, provision (add) numbers to an account, list provisioned numbers, and release numbers no longer needed.
+Authentication, trust centre, and vulnerability disclosure.
 
-- **Human URL:** [https://docs.documo.com/](https://docs.documo.com/)
-- **Base URL:** `https://api.documo.com/v1`
+- [Documo Authentication](https://apis.io/security/documo/documo-authentication/)
+- [Documo Domain Security](https://apis.io/security/documo/documo-domain-security/)
+- [Documo Trust Center](https://apis.io/security/documo/documo-trust-center/)
 
-#### Tags
+#### Plans and pricing (1)
 
-- Numbers
-- Provisioning
-- DID
+Published plans, tiers and prices.
 
-#### Properties
+- [Documo Plans Pricing](https://apis.io/plans/documo/documo-plans-pricing/)
 
-- [Documentation](https://docs.documo.com/)
-- [OpenAPI](openapi/documo-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/documo.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/documo.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Rate limits (1)
 
-### Documo Webhooks API
+Published request limits.
 
-Create, list, and delete webhook subscriptions at the account or number level to receive inbound/outbound fax succeed and failed events plus number add and release events.
+- [Documo Rate Limits](https://apis.io/rate-limits/documo/documo-rate-limits/)
 
-- **Human URL:** [https://docs.documo.com/#create-webhook](https://docs.documo.com/#create-webhook)
-- **Base URL:** `https://api.documo.com/v1`
+#### FinOps (1)
 
-#### Tags
+What the API costs to run, by operation.
 
-- Webhooks
-- Events
-- Notifications
+- [Documo Finops](https://apis.io/finops/documo/documo-finops/)
 
-#### Properties
+## Where to find this API
 
-- [Documentation](https://docs.documo.com/#create-webhook)
-- [OpenAPI](openapi/documo-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/documo.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/documo.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-### Documo Account API
-
-Retrieve account profile and settings information. API keys carry an admin or user access level that governs which endpoints they can call.
-
-- **Human URL:** [https://docs.documo.com/](https://docs.documo.com/)
-- **Base URL:** `https://api.documo.com/v1`
-
-#### Tags
-
-- Account
-- Settings
-
-#### Properties
-
-- [Documentation](https://docs.documo.com/)
-- [OpenAPI](openapi/documo-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/documo.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/documo.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/documo)
 - [Website](https://www.documo.com/)
 - [Documentation](https://docs.documo.com/)
-- [Plans](plans/documo-plans-pricing.yml)
-- [Rate Limits](rate-limits/documo-rate-limits.yml)
-- [Fin Ops](finops/documo-finops.yml)
+- [Blog](https://www.documo.com/blog/feed/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 29.0** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 51.6 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 28.6 |
+| Access clarity | 15.8 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/documo/](https://apis.io/providers/documo/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Documo: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/documo/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
